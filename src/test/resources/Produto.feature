@@ -1,41 +1,37 @@
-Feature: Produto
+# language: pt
+Funcionalidade: Produto
 
-  Scenario: Criar produto
-    Given dado que eu recebi os dados para preenchimento de um produto
-    When irei preencher um registro de produto no banco de dados
-    Then recebo a resposta com um registro de produto com o código de identificação gerado na persistencia
+  Cenário: Criar um novo produto
+    Quando submeter um novo produto
+    Então o produto é registrado com sucesso
 
-  Scenario: Alterar produto
-    Given dado que eu tenho o registro de um produto
-    When quando eu receber os dados dos campos que devem ser alterados
-    Then efetuo a alteração dos campos no produto
-    And retorno um código de sucesso
+  Cenário: Alterar um produto existente
+    Dado que um produto já foi registrado
+    Quando quando requisitar a alteração do produto
+    Então o produto é alterado com sucesso
 
-  Scenario: Remover produto
-    Given dado que eu tenho o registro de um produto
-    When quando eu receber o código deste produto
-    Then efetuo a remoção do produto
-    And retorno um código de sucesso
+  Cenário: Excluir um produto existente
+    Dado que um produto já foi registrado
+    Quando requisitar a exclusão do produto
+    Então o produto é excluido com sucesso
 
-  Scenario: Busca de um produto
-    Given dado que eu tenho o registro de um produto
-    When quando eu receber o código deste produto
-    Then executo a busca do produto
-    And retorno os dados do produto
+  Cenário: Busca um produto existente
+    Dado que um produto já foi registrado
+    Quando requisitar a busca do produto
+    Então o produto é exibido com sucesso
 
-  Scenario: Buscar todos os produtos cadastrados
-    Given dado que recebo uma requisição para listar todos os produtos
-    Then executo a busca por todos os produtos
-    And retorno a listagem dos dados dos produtos encontrados
+  Cenário: Lista produtos existentes
+    Dado que um produto já foi registrado
+    Quando requisitar a lista de produtos
+    Então os produtos são exibidos com sucesso
 
-  Scenario: Busca de produtos por categoria
-    Given dado que eu tenho o registro de produtos nesta categoria solicitada
-    When quando eu receber a identificação da categoria
-    Then executo a busca dos produtos
-    And retorno a listagem dos produtos encontrados
+  Cenário: Busca de produtos por categoria
+    Dado que um produto já foi registrado na categoria buscada
+    Quando requisitar a busca por produtos da categoria
+    Então os produtos são exibidos com sucesso
 
-  Scenario: Buscar todas as categorias de produtos
-    Given dado que recebo uma requisição para listar todas as categorias de produtos
-    Then executo a busca por todas as categorias de produtos
-    And retorno a listagem das categorias encontradas
+  Cenário: Buscar todas as categorias de produtos
+    Dado que lista de categorias exista
+    Quando requisitar a sua listagem
+    Então as categorias são exibidas
 
