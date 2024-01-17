@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "codigo": {
+        "type": "string"
+      },
+      "nome": {
+        "type": "string"
+      },
+      "descricao": {
+        "type": "string"
+      },
+      "preco": {
+        "type": "number"
+      },
+      "categoria": {
+        "type": "string"
+      },
+      "imagem": {
+        "type": "string"
+      },
+      "tempoPreparoMin": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "codigo",
+      "nome",
+      "descricao",
+      "preco",
+      "categoria",
+      "imagem",
+      "tempoPreparoMin"
+    ]
+  }
+}
