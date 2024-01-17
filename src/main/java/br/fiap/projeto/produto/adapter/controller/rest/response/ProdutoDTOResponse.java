@@ -1,13 +1,11 @@
 package br.fiap.projeto.produto.adapter.controller.rest.response;
 
 import br.fiap.projeto.produto.entity.Produto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Getter
+@Builder
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ProdutoDTOResponse {
 
     private String codigo;
