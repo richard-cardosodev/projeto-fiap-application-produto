@@ -11,12 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -27,7 +22,7 @@ public class StepDefinitions {
 
     private ProdutoDTOResponse produtoResponse;
 
-    private final String ENDPOINT_API_CRIAR_PRODUTO = "http://localhost:8080/produto/produtos";
+    private final String ENDPOINT_API_PRODUTO = "http://localhost:8080/produto/produtos";
 
     @Quando("submeter um novo produto")
     public ProdutoDTOResponse submeterNovoProduto() {
@@ -35,7 +30,7 @@ public class StepDefinitions {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(geraProdutoRequest())
                 .when()
-                .post(ENDPOINT_API_CRIAR_PRODUTO);
+                .post(ENDPOINT_API_PRODUTO);
         return response.then().extract().as(ProdutoDTOResponse.class);
     }
 
@@ -58,7 +53,7 @@ public class StepDefinitions {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(produtoResponse)
                 .when()
-                .put("/produto/produtos/{id}", produtoResponse.getCodigo().toString());
+                .put(ENDPOINT_API_PRODUTO + "/{id}", produtoResponse.getCodigo().toString());
     }
 
     @Então("o produto é alterado com sucesso")
@@ -71,7 +66,7 @@ public class StepDefinitions {
     public void requisitarExclusaoDoProduto() {
         response = given()
                 .when()
-                .delete("/produto/produtos/{id}", produtoResponse.getCodigo().toString());
+                .delete(ENDPOINT_API_PRODUTO + "/{id}", produtoResponse.getCodigo().toString());
     }
 
     @Então("o produto é excluido com sucesso")
@@ -84,7 +79,7 @@ public class StepDefinitions {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/produto/produtos/{id}", produtoResponse.getCodigo().toString());
+                .get(ENDPOINT_API_PRODUTO + "/{id}", produtoResponse.getCodigo().toString());
     }
 
     @Então("o produto é exibido com sucesso")
@@ -99,7 +94,7 @@ public class StepDefinitions {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/produto/produtos");
+                .get(ENDPOINT_API_PRODUTO);
     }
 
     @Então("os produtos são exibidos com sucesso")
@@ -120,7 +115,7 @@ public class StepDefinitions {
         response = given()
                 .when()
                 .queryParam("categoria", CategoriaProduto.BEBIDA)
-                .get("/produto/produtos/por-categoria");
+                .get(ENDPOINT_API_PRODUTO + "/por-categoria");
     }
 
     @Dado("que lista de categorias exista")
@@ -134,7 +129,7 @@ public class StepDefinitions {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get("/produto/produtos/categorias");
+                .get(ENDPOINT_API_PRODUTO + "/categorias");
     }
 
     @Então("as categorias são exibidas")
