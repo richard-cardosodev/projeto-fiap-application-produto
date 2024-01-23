@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
     restart: always
-  projeto-fiap-identificacao:
+  projeto-fiap-produto:
     image: projeto-fiap-produto
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/test_db
