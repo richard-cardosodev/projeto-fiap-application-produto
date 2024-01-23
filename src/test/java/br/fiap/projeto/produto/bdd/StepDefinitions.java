@@ -31,7 +31,10 @@ public class StepDefinitions {
                 .body(geraProdutoRequest())
                 .when()
                 .post(ENDPOINT_API_PRODUTO);
-        return response.then().extract().as(ProdutoDTOResponse.class);
+        return response
+                .then()
+                .statusCode(HttpStatus.CREATED.value())
+                .extract().as(ProdutoDTOResponse.class);
     }
 
     @Então("o produto é registrado com sucesso")
@@ -46,7 +49,7 @@ public class StepDefinitions {
         produtoResponse = submeterNovoProduto();
     }
 
-    @Quando("quando requisitar a alteração do produto")
+    @Quando("requisitar a alteração do produto")
     public void requisitarAlteracaoProduto() {
         produtoResponse.setNome("Sprite" + LocalDateTime.now().toString());
         response = given()
@@ -125,7 +128,6 @@ public class StepDefinitions {
 
     @Quando("requisitar a sua listagem")
     public void requisitarSuaListagem() {
-//        Arrays.stream(CategoriaProduto.values()).forEach(System.out::println);
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -143,11 +145,11 @@ public class StepDefinitions {
     private ProdutoDTORequest geraProdutoRequest() {
         return ProdutoDTORequest
                 .builder()
-                .nome("Coca Cola" + LocalDateTime.now().toString())
+                .nome("Coca Cola - " + LocalDateTime.now().toString())
                 .descricao("Refrigerante")
                 .preco(10d)
                 .categoria(CategoriaProduto.BEBIDA.name())
-                .imagem("http://teste")
+                .imagem("https://via.placeholder.com/200/200")
                 .tempoPreparoMin(15)
                 .build();
     }

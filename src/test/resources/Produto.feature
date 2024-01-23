@@ -7,7 +7,7 @@ Funcionalidade: Produto
 
   Cenário: Alterar um produto existente
     Dado que um produto já foi registrado
-    Quando quando requisitar a alteração do produto
+    Quando requisitar a alteração do produto
     Então o produto é alterado com sucesso
 
   Cenário: Excluir um produto existente
