@@ -68,19 +68,19 @@ public class Produto {
     }
 
     private void validaCodigo() throws EntradaInvalidaException {
-        if(codigo.equals(null) || codigo.isEmpty()) {
+        if(codigo == null || codigo.isEmpty()) {
             throw new EntradaInvalidaException(CODIGO_NULO);
         }
     }
 
     private void validaNome() throws EntradaInvalidaException {
-        if(nome.equals(null) || nome.isEmpty()) {
+        if(nome == null || nome.isEmpty()) {
             throw new EntradaInvalidaException(NOME_NULO);
         }
     }
 
     private void validaDescricao() throws EntradaInvalidaException {
-        if(descricao.equals(null) || descricao.isEmpty()) {
+        if(descricao == null || descricao.isEmpty()) {
             throw new EntradaInvalidaException(DESCRICAO_NULA);
         }
     }
@@ -95,7 +95,7 @@ public class Produto {
     }
 
     private void validaCategoria() throws EntradaInvalidaException {
-        if(categoria.equals(null)) {
+        if(categoria == null) {
             throw new EntradaInvalidaException(CATEGORIA_NULA);
         }
     }

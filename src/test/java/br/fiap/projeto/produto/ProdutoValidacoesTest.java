@@ -16,7 +16,7 @@ class ProdutoValidacoesTest {
         assertDoesNotThrow(
                 () -> new Produto("123", "Hamburguer", "Lanche para comer bem bão", 20.52,
                         CategoriaProduto.LANCHE,
-                        "imagem", 10));
+                        "http://teste.com/imagem.png", 10));
     }
 
     @Test
@@ -37,7 +37,7 @@ class ProdutoValidacoesTest {
                 EntradaInvalidaException.class,
                 () -> new Produto("123", null, "Lanche para comer bem bão", 20.52,
                         CategoriaProduto.LANCHE,
-                        "imagem", 10),
+                        "http://teste.com/imagem.png", 10),
                 "Mensagem de erro");
     }
 
@@ -67,7 +67,7 @@ class ProdutoValidacoesTest {
     void criaProdutoSemCategoria() throws EntradaInvalidaException {
 
         assertThrows(
-                NullPointerException.class,
+                EntradaInvalidaException.class,
                 () -> new Produto("123", "Hamburguer", "Lanche para comer bem bão", 20.52,
                         null,
                         "imagem", 10),

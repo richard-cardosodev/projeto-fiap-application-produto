@@ -41,10 +41,10 @@ class ProdutoControllerTest {
 
         // Preparação de dados de teste
         ProdutoDTORequest produtoDTORequest = new ProdutoDTORequest("Produto de Teste", "Descrição de Teste", 10.0,
-                "LANCHE", "Imagem de Teste", 30);
+                "LANCHE", "http://teste.com/imagem.png", 30);
         // Produto produtoSimulado = new Produto("Produto de Teste", "Descrição de
         // Teste", 10.0, CategoriaProduto.LANCHE,
-        // "Imagem de Teste", 30);
+        // "http://teste.com/imagem.png", 30);
         Produto produtoSimulado = produtoDTORequest.toProduto();
 
         // Configuração do comportamento simulado do produtoUseCase
@@ -99,7 +99,7 @@ class ProdutoControllerTest {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoSimulado = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,
-                CategoriaProduto.LANCHE, "Imagem de Teste", 30);
+                CategoriaProduto.LANCHE, "http://teste.com/imagem.png", 30);
 
         // Configuração do comportamento simulado do produtoUseCase
         Mockito.when(gestaoProdutoUseCase.buscaProduto(codigoProduto)).thenReturn(produtoSimulado);
