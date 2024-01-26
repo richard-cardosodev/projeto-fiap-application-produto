@@ -1,8 +1,8 @@
 package br.fiap.projeto.produto.usecase.exception;
 
 public class EntradaInvalidaException extends BaseException {
-    private final static String DEFAULT_MESSAGE = "Entrada inválida!";
-    private final static int CODE = 3003;
+    private static final String DEFAULT_MESSAGE = "Entrada inválida!";
+    private static final int CODE = 3003;
     public EntradaInvalidaException() {
         super(CODE, DEFAULT_MESSAGE);
     }

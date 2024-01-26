@@ -24,7 +24,7 @@ import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
 
 @ExtendWith(MockitoExtension.class)
-public class ProdutoServiceTest {
+class ProdutoServiceTest {
 
     @InjectMocks
     private GestaoProdutoUseCase gestao;
@@ -33,7 +33,7 @@ public class ProdutoServiceTest {
     private IProdutoRepositoryAdapterGateway produtoRepositoryAdapterGateway;
 
     @Test
-    public void criaProdutoComProdutoValido() throws EntradaInvalidaException {
+    void criaProdutoComProdutoValido() throws EntradaInvalidaException {
 
         gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
 
@@ -55,7 +55,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void criaProdutoComProdutoNulo() {
+    void criaProdutoComProdutoNulo() {
 
         gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
         // Preparação de dados de teste
@@ -68,7 +68,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void atualizaProdutoComProdutoExistente()
+    void atualizaProdutoComProdutoExistente()
             throws ProdutoNaoEncontradoException, EntradaInvalidaException {
 
         // gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
@@ -91,7 +91,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void atualizaProdutoComProdutoNaoExistente() throws EntradaInvalidaException {
+    void atualizaProdutoComProdutoNaoExistente() throws EntradaInvalidaException {
 
         // gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
 
@@ -114,7 +114,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void removeProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
+    void removeProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoExistente = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,
@@ -133,7 +133,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void removeProdutoComProdutoNaoExistente() {
+    void removeProdutoComProdutoNaoExistente() {
         // Preparação de dados de teste
         String codigoProdutoNaoExistente = "98765";
 
@@ -151,7 +151,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
+    void buscaProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoExistente = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,
@@ -171,7 +171,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutoComProdutoNaoExistente() {
+    void buscaProdutoComProdutoNaoExistente() {
         // Preparação de dados de teste
         String codigoProdutoNaoExistente = "98765";
 
@@ -186,7 +186,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutosPorCategoria() throws EntradaInvalidaException {
+    void buscaProdutosPorCategoria() throws EntradaInvalidaException {
         // Preparação de dados de teste
         CategoriaProduto categoria = CategoriaProduto.LANCHE;
         List<Produto> produtosSimulados = Arrays.asList(
@@ -206,7 +206,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaTodosProdutos() throws EntradaInvalidaException {
+    void buscaTodosProdutos() throws EntradaInvalidaException {
         // Preparação de dados de teste
         CategoriaProduto categoria = CategoriaProduto.LANCHE;
         List<Produto> produtosSimulados = Arrays.asList(

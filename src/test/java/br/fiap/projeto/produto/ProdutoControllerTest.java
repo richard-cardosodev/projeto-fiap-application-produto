@@ -21,7 +21,7 @@ import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IGestaoProdutoUseCase;
 
-public class ProdutoControllerTest {
+class ProdutoControllerTest {
 
     @InjectMocks
     private ProdutoRestAdapterController controller;
@@ -35,7 +35,7 @@ public class ProdutoControllerTest {
     }
 
     @Test
-    public void criaProduto() throws EntradaInvalidaException {
+    void criaProduto() throws EntradaInvalidaException {
 
         controller = new ProdutoRestAdapterController(gestaoProdutoUseCase);
 
@@ -63,7 +63,7 @@ public class ProdutoControllerTest {
     }
 
     @Test
-    public void testRemoveProduto() throws ProdutoNaoEncontradoException {
+    void testRemoveProduto() throws ProdutoNaoEncontradoException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
 
@@ -78,7 +78,7 @@ public class ProdutoControllerTest {
     }
 
     @Test
-    public void removeProdutoComProdutoNaoEncontradoException() throws ProdutoNaoEncontradoException {
+    void removeProdutoComProdutoNaoEncontradoException() throws ProdutoNaoEncontradoException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         //
@@ -95,7 +95,7 @@ public class ProdutoControllerTest {
     }
 
     @Test
-    public void buscaProduto() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
+    void buscaProduto() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoSimulado = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,

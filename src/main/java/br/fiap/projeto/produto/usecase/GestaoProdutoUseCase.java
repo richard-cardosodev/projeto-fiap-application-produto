@@ -26,15 +26,13 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
 
     @Override
     public List<Produto> buscaTodos() {
-        List<Produto> produtos = produtoAdapterGateway.buscaTodos();
-        return produtos;
+        return produtoAdapterGateway.buscaTodos();
     }
 
     @Override
     public Produto buscaProduto(String codigo) throws ProdutoNaoEncontradoException {
         Optional<Produto> produto = produtoAdapterGateway.buscaProduto(codigo);
-        produto.orElseThrow(() -> new ProdutoNaoEncontradoException());
-        return produto.get();
+        return produto.orElseThrow(ProdutoNaoEncontradoException::new);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     @Override
     public Void removeProduto(String codigo) throws ProdutoNaoEncontradoException {
         Optional<Produto> produtoRecuperado = produtoAdapterGateway.buscaProduto(codigo);
-        produtoRecuperado.orElseThrow(() -> new ProdutoNaoEncontradoException());
+        produtoRecuperado.orElseThrow(ProdutoNaoEncontradoException::new);
         produtoAdapterGateway.removeProduto(codigo);
         return null;
     }
@@ -73,7 +71,7 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     public void atualizaProduto(String codigo, Produto produto)
             throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         Optional<Produto> produtoRecuperado = produtoAdapterGateway.buscaProduto(codigo);
-        produtoRecuperado.orElseThrow(() -> new ProdutoNaoEncontradoException());
+        produtoRecuperado.orElseThrow(ProdutoNaoEncontradoException::new);
         produtoAdapterGateway.atualizaProduto(new Produto(codigo, produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin()));
     }
