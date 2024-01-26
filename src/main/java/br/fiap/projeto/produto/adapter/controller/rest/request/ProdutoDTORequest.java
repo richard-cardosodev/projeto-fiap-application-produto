@@ -3,10 +3,10 @@ package br.fiap.projeto.produto.adapter.controller.rest.request;
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
-@Getter
+@Builder
+@Data
 @AllArgsConstructor
 public class ProdutoDTORequest {
 
