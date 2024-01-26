@@ -103,7 +103,7 @@ public class Produto {
     private void validaImagem() throws EntradaInvalidaException {
         if(imagem != null) {
             try {
-                URL url = new URL(imagem);
+                new URL(imagem);
             } catch (MalformedURLException e){
                 throw new EntradaInvalidaException(IMAGEM_NAO_E_UMA_URL);
             }
