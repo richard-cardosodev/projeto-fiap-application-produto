@@ -29,7 +29,6 @@ public class ProdutoApiController {
     }
 
     @GetMapping
-    @ResponseBody
     @ApiOperation(value = "Busca todos os produtos", notes = "Este endpoint retorna todos os produtos cadastrados")
     public ResponseEntity<List<ProdutoDTOResponse>> getProdutos() {
         return ResponseEntity.ok().body(this.produtoAdapterController.buscaTodos());
@@ -37,21 +36,18 @@ public class ProdutoApiController {
 
     @SneakyThrows
     @GetMapping("/{codigo}")
-    @ResponseBody
     @ApiOperation(value = "Busca por produto", notes = "Este endpoint busca um produto pelo seu código")
     public ResponseEntity<ProdutoDTOResponse> getProduto(@PathVariable("codigo") String codigo) {
         return ResponseEntity.status(HttpStatus.OK).body(this.produtoAdapterController.buscaProduto(codigo));
     }
 
     @GetMapping("/por-categoria")
-    @ResponseBody
     @ApiOperation(value = "Busca produtos por categoria", notes = "Este endpoint busca produtos filtrando por categoria")
     public ResponseEntity<List<ProdutoDTOResponse>> getProdutosPorCategoria(@PathParam("categoria") CategoriaProduto categoria) {
         return ResponseEntity.ok(this.produtoAdapterController.buscaProdutosPorCategoria(categoria));
     }
 
     @GetMapping("/categorias")
-    @ResponseBody
     @ApiOperation(value = "Busca por categorias de produtos", notes = "Este endpoint retorna uma lista de categorias existentes de produto")
     public ResponseEntity<List<String>> getCategoriasDeProdutos() {
         List<String> lista = this.produtoAdapterController.getCategoriasDeProdutos();

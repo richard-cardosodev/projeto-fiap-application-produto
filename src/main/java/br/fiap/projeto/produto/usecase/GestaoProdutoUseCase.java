@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
 
+    public static final String PRODUTO_NULO = "Entrada inválida! Produto não deve ser nulo!";
+    public static final String PRODUTO_JA_CADASTRADO = "O produto não pode ter o mesmo nome de um já cadastrado!";
+
     private final IProdutoRepositoryAdapterGateway produtoAdapterGateway;
 
     public GestaoProdutoUseCase(IProdutoRepositoryAdapterGateway produtoAdapterGateway) {
@@ -47,7 +50,11 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     @Override
     public Produto criaProduto(Produto produto) throws EntradaInvalidaException {
         if (produto == null) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
+            throw new EntradaInvalidaException(PRODUTO_NULO);
+        }
+        Optional<Produto> produtoExistente = produtoAdapterGateway.buscaProdutoPorNome(produto.getNome());
+        if(produtoExistente.isPresent()){
+            throw new EntradaInvalidaException(PRODUTO_JA_CADASTRADO);
         }
         Produto newProduto = new Produto(UUID.randomUUID().toString(), produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin());

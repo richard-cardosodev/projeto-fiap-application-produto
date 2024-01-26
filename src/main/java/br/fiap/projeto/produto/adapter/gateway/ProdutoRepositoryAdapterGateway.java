@@ -4,7 +4,6 @@ import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.external.repository.entity.ProdutoEntity;
 import br.fiap.projeto.produto.external.repository.postgres.SpringProdutoRepository;
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
 
 import java.util.List;
@@ -22,44 +21,29 @@ public class ProdutoRepositoryAdapterGateway implements IProdutoRepositoryAdapte
     @Override
     public List<Produto> buscaTodos() {
         List<ProdutoEntity> resultados = springProdutoRepository.findAll();
-        return resultados.stream().map(t -> {
-            try {
-                return t.toProduto();
-            } catch (EntradaInvalidaException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        return resultados.stream().map(ProdutoEntity::toProduto).collect(Collectors.toList());
     }
 
     @Override
     public Optional<Produto> buscaProduto(String codigo) {
         Optional<ProdutoEntity> produtoEntity = springProdutoRepository.findByCodigo(codigo);
-        return produtoEntity.map(t -> {
-            try {
-                return t.toProduto();
-            } catch (EntradaInvalidaException e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
+        return produtoEntity.map(ProdutoEntity::toProduto);
+    }
+
+    @Override
+    public Optional<Produto> buscaProdutoPorNome(String nome) {
+        Optional<ProdutoEntity> resultadoBusca = springProdutoRepository.findByNomeIgnoreCase(nome);
+        return resultadoBusca.map(ProdutoEntity::toProduto);
     }
 
     @Override
     public List<Produto> buscaProdutosPorCategoria(CategoriaProduto categoria) {
         List<ProdutoEntity> resultados = springProdutoRepository.findByCategoria(categoria);
-        return resultados.stream().map(t -> {
-            try {
-                return t.toProduto();
-            } catch (EntradaInvalidaException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).collect(Collectors.toList());
+        return resultados.stream().map(ProdutoEntity::toProduto).collect(Collectors.toList());
     }
 
     @Override
-    public Produto criaProduto(Produto produto) throws EntradaInvalidaException {
+    public Produto criaProduto(Produto produto) {
         ProdutoEntity produtoSalvo = springProdutoRepository.save(new ProdutoEntity(produto));
         return produtoSalvo.toProduto();
     }

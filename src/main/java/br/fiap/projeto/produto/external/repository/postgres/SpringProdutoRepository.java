@@ -13,6 +13,8 @@ import br.fiap.projeto.produto.external.repository.entity.ProdutoEntity;
 public interface SpringProdutoRepository extends JpaRepository<ProdutoEntity, String> {
     Optional<ProdutoEntity> findByCodigo(String codigo);
 
+    Optional<ProdutoEntity> findByNomeIgnoreCase(String nome);
+
     List<ProdutoEntity> findByCategoria(CategoriaProduto categoria);
 
     void deleteByCodigo(String codigo);

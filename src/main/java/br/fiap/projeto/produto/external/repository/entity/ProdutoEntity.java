@@ -2,7 +2,7 @@ package br.fiap.projeto.produto.external.repository.entity;
 
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import lombok.SneakyThrows;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -46,7 +46,8 @@ public class ProdutoEntity {
         this.tempoPreparoMin = produto.getTempoPreparoMin();
     }
 
-    public Produto toProduto() throws EntradaInvalidaException {
+    @SneakyThrows
+    public Produto toProduto() {
         return new Produto(codigo, nome, descricao, preco, categoria, imagem, tempoPreparoMin);
     }
 }
