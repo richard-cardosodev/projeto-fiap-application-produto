@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-public class PostgresProdutoDataLoader {
+public class ProdutoDataLoader {
 
     public static final String IMAGE_URL = "https://via.placeholder.com/200/200";
     @Autowired

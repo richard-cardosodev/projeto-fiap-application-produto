@@ -2,7 +2,7 @@ package br.fiap.projeto.produto.adapter.gateway;
 
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
-import br.fiap.projeto.produto.external.repository.entity.ProdutoEntity;
+import br.fiap.projeto.produto.external.repository.jpa.entity.ProdutoEntity;
 import br.fiap.projeto.produto.external.repository.postgres.PostgreProdutoRepository;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ProdutoRepositoryAdapterGateway implements IProdutoRepositoryAdapterGateway {
+public class ProdutoRepositoryAdapterGatewayPostgre implements IProdutoRepositoryAdapterGateway {
 
     private final PostgreProdutoRepository postgreProdutoRepository;
 
-    public ProdutoRepositoryAdapterGateway(PostgreProdutoRepository postgreProdutoRepository) {
+    public ProdutoRepositoryAdapterGatewayPostgre(PostgreProdutoRepository postgreProdutoRepository) {
         this.postgreProdutoRepository = postgreProdutoRepository;
     }
 

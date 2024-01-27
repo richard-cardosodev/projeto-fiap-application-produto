@@ -1,7 +1,7 @@
 package br.fiap.projeto.produto.external.repository.postgres;
 
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
-import br.fiap.projeto.produto.external.repository.entity.ProdutoEntity;
+import br.fiap.projeto.produto.external.repository.jpa.entity.ProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
