@@ -4,6 +4,8 @@ import br.fiap.projeto.produto.adapter.controller.port.IProdutoRestAdapterContro
 import br.fiap.projeto.produto.adapter.controller.rest.request.ProdutoDTORequest;
 import br.fiap.projeto.produto.adapter.controller.rest.response.ProdutoDTOResponse;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
+import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
@@ -34,10 +36,9 @@ public class ProdutoApiController {
         return ResponseEntity.ok().body(this.produtoAdapterController.buscaTodos());
     }
 
-    @SneakyThrows
     @GetMapping("/{codigo}")
     @ApiOperation(value = "Busca por produto", notes = "Este endpoint busca um produto pelo seu código")
-    public ResponseEntity<ProdutoDTOResponse> getProduto(@PathVariable("codigo") String codigo) {
+    public ResponseEntity<ProdutoDTOResponse> getProduto(@PathVariable("codigo") String codigo) throws ProdutoNaoEncontradoException {
         return ResponseEntity.status(HttpStatus.OK).body(this.produtoAdapterController.buscaProduto(codigo));
     }
 
@@ -54,26 +55,24 @@ public class ProdutoApiController {
         return ResponseEntity.ok(lista);
     }
 
-    @SneakyThrows
     @PostMapping
     @ApiOperation(value = "Cria produto", notes = "Este endpoint permite a criação de novos produtos")
-    public ResponseEntity<ProdutoDTOResponse> criaProduto(@RequestBody ProdutoDTORequest produtoDTORequest) {
+    public ResponseEntity<ProdutoDTOResponse> criaProduto(@RequestBody ProdutoDTORequest produtoDTORequest) throws EntradaInvalidaException {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.produtoAdapterController.criaProduto(produtoDTORequest));
     }
 
-    @SneakyThrows
+
     @Transactional
     @DeleteMapping("/{codigo}")
     @ApiOperation(value = "Remove produto", notes = "Este endpoint permite remover produtos do cadastro")
-    public ResponseEntity<Void> removeProduto(@PathVariable("codigo") String codigo) {
+    public ResponseEntity<Void> removeProduto(@PathVariable("codigo") String codigo) throws ProdutoNaoEncontradoException {
         this.produtoAdapterController.removeProduto(codigo);
         return ResponseEntity.noContent().build();
     }
 
-    @SneakyThrows
     @PutMapping("/{codigo}")
     @ApiOperation(value = "Atualiza produto", notes = "Este endpoint permite a atualização de produtos do cadastro")
-    public ResponseEntity<Void> atualizaProduto(@PathVariable String codigo, @RequestBody ProdutoDTORequest produtoDTO) {
+    public ResponseEntity<Void> atualizaProduto(@PathVariable String codigo, @RequestBody ProdutoDTORequest produtoDTO) throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         this.produtoAdapterController.atualizaProduto(codigo, produtoDTO);
         return ResponseEntity.ok().build();
     }
