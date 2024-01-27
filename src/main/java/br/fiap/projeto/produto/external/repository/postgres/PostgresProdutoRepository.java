@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PostgreProdutoRepository extends JpaRepository<ProdutoEntity, String> {
+public interface PostgresProdutoRepository extends JpaRepository<ProdutoEntity, String> {
     Optional<ProdutoEntity> findByCodigo(String codigo);
 
     Optional<ProdutoEntity> findByNomeIgnoreCase(String nome);
