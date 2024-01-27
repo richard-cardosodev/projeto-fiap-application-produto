@@ -37,11 +37,47 @@ public class ProdutoIntegrationTest {
     }
 
     @Test
+    void testeInserirComImagemInvalida() throws Exception {
+
+        ProdutoDTORequest dto = geraProdutoRequestDTO();
+        dto.setImagem("123");
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/produtos")
+                        .content(asJsonString(dto))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+    }
+
+    @Test
+    void testeBuscaProdutoInexistente() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .get("/produtos/1234")
+        ).andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Test
+    void testeBuscaTodosProdutos() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .get("/produtos")
+        ).andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()));
+    }
+
+    @Test
     void testeBuscaPorCategoria() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .get("/produtos/por-categoria")
                 .queryParam("categoria", CategoriaProduto.LANCHE.name())
         ).andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()));
+    }
+
+    @Test
+    void testRemoverInexistente() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .delete("/produtos/0000")
+        ).andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
     }
 
     private ProdutoDTORequest geraProdutoRequestDTO() {
