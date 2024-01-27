@@ -3,7 +3,7 @@ package br.fiap.projeto.produto.external.configuration;
 import br.fiap.projeto.produto.adapter.controller.ProdutoRestAdapterController;
 import br.fiap.projeto.produto.adapter.controller.port.IProdutoRestAdapterController;
 import br.fiap.projeto.produto.adapter.gateway.ProdutoRepositoryAdapterGateway;
-import br.fiap.projeto.produto.external.repository.postgres.SpringProdutoRepository;
+import br.fiap.projeto.produto.external.repository.postgres.PostgreProdutoRepository;
 import br.fiap.projeto.produto.usecase.GestaoProdutoUseCase;
 import br.fiap.projeto.produto.usecase.port.IGestaoProdutoUseCase;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
@@ -18,8 +18,8 @@ public class BeanProdutoConfiguration {
     }
 
     @Bean
-    IProdutoRepositoryAdapterGateway produtoAdapterGateway(SpringProdutoRepository springProdutoRepository) {
-        return new ProdutoRepositoryAdapterGateway(springProdutoRepository);
+    IProdutoRepositoryAdapterGateway produtoAdapterGateway(PostgreProdutoRepository postgreProdutoRepository) {
+        return new ProdutoRepositoryAdapterGateway(postgreProdutoRepository);
     }
 
     @Bean
