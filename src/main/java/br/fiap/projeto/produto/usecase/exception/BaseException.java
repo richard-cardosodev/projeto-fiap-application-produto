@@ -2,11 +2,11 @@ package br.fiap.projeto.produto.usecase.exception;
 
 public abstract class BaseException extends Exception {
 
-    public final static int DEFAULT_CODE = 3000;
+    public static final int DEFAULT_CODE = 3000;
     private int code;
     private String message;
 
-    public BaseException(int code, String message) {
+    protected BaseException(int code, String message) {
         this.code = code;
         this.message = message;
     }

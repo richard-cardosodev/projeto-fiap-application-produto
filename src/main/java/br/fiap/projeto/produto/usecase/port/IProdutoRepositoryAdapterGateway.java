@@ -12,6 +12,8 @@ public interface IProdutoRepositoryAdapterGateway {
 
     public Optional<Produto> buscaProduto(String codigo);
 
+    public Optional<Produto> buscaProdutoPorNome(String nome);
+
     public List<Produto> buscaProdutosPorCategoria(CategoriaProduto categoria);
 
     public Produto criaProduto(Produto produto) throws EntradaInvalidaException;

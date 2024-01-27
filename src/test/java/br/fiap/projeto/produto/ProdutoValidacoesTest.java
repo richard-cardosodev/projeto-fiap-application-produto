@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test;
 
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 
-public class ProdutoValidacoesTest {
+class ProdutoValidacoesTest {
 
     @Test
-    public void criaProdutoComParametrosValidosComChave() throws EntradaInvalidaException {
+    void criaProdutoComParametrosValidosComChave() throws EntradaInvalidaException {
         assertDoesNotThrow(
                 () -> new Produto("123", "Hamburguer", "Lanche para comer bem bão", 20.52,
                         CategoriaProduto.LANCHE,
-                        "imagem", 10));
+                        "http://teste.com/imagem.png", 10));
     }
 
     @Test
-    public void criaProdutoSemChave() throws EntradaInvalidaException {
+    void criaProdutoSemChave() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
@@ -31,18 +31,18 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoSemNome() throws EntradaInvalidaException {
+    void criaProdutoSemNome() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
                 () -> new Produto("123", null, "Lanche para comer bem bão", 20.52,
                         CategoriaProduto.LANCHE,
-                        "imagem", 10),
+                        "http://teste.com/imagem.png", 10),
                 "Mensagem de erro");
     }
 
     @Test
-    public void criaProdutoSemDescricao() throws EntradaInvalidaException {
+    void criaProdutoSemDescricao() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
@@ -53,7 +53,7 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoSemPreco() throws EntradaInvalidaException {
+    void criaProdutoSemPreco() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
@@ -64,10 +64,10 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoSemCategoria() throws EntradaInvalidaException {
+    void criaProdutoSemCategoria() throws EntradaInvalidaException {
 
         assertThrows(
-                NullPointerException.class,
+                EntradaInvalidaException.class,
                 () -> new Produto("123", "Hamburguer", "Lanche para comer bem bão", 20.52,
                         null,
                         "imagem", 10),
@@ -75,7 +75,7 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoSemTempoPreparoMinimo() throws EntradaInvalidaException {
+    void criaProdutoSemTempoPreparoMinimo() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
@@ -86,7 +86,7 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoComTempoPreparoMinimoZero() throws EntradaInvalidaException {
+    void criaProdutoComTempoPreparoMinimoZero() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,
@@ -97,7 +97,7 @@ public class ProdutoValidacoesTest {
     }
 
     @Test
-    public void criaProdutoComTempoPreparoMinimoNegativo() throws EntradaInvalidaException {
+    void criaProdutoComTempoPreparoMinimoNegativo() throws EntradaInvalidaException {
 
         assertThrows(
                 EntradaInvalidaException.class,

@@ -1,22 +1,28 @@
 package br.fiap.projeto.produto.entity;
 
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
+import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Produto {
 
+    public static final String CODIGO_NULO = "Código não pode ser nulo!";
+    public static final String NOME_NULO = "Nome não pode ser nulo!";
+    public static final String DESCRICAO_NULA = "A descrição não pode ser nula!";
+    public static final String PRECO_NULO = "Preço não pode ser nulo!";
+    public static final String PRECO_MENOR_QUE_ZERO = "Preço deve ser um valor maior que zero!";
+    public static final String CATEGORIA_NULA = "Categoria não pode ser nula!";
+    public static final String IMAGEM_NAO_E_UMA_URL = "Endereço da imagem não representa uma URL!";
+    public static final String TEMPO_DE_PREPARO_NULO = "Tempo de preparo não pode ser nulo!";
+    public static final String TEMPO_DE_PREPARO_MENOR_QUE_ZERO = "Tempo de preparo deve ser um valor maior ou igual a zero!";
     private String codigo;
-
     private String nome;
-
     private String descricao;
-
     private Double preco;
-
     private CategoriaProduto categoria;
-
     private String imagem;
-
     private Integer tempoPreparoMin;
 
     public Produto(String nome, String descricao, Double preco, CategoriaProduto categoria, String imagem,
@@ -27,7 +33,7 @@ public class Produto {
         this.categoria = categoria;
         this.imagem = imagem;
         this.tempoPreparoMin = tempoPreparoMin;
-        validarProdutoSemCodigo();
+        validaProdutoSemCodigo();
     }
 
     public Produto(String codigo, String nome, String descricao, Double preco, CategoriaProduto categoria,
@@ -39,7 +45,78 @@ public class Produto {
         this.categoria = categoria;
         this.imagem = imagem;
         this.tempoPreparoMin = tempoPreparoMin;
-        validarProdutoComCodigo();
+        validaProdutoComCodigo();
+    }
+
+    private void validaProdutoSemCodigo() throws EntradaInvalidaException {
+        validaNome();
+        validaDescricao();
+        validaPreco();
+        validaCategoria();
+        validaImagem();
+        validaTempoPreparo();
+    }
+
+    private void validaProdutoComCodigo() throws EntradaInvalidaException {
+        validaCodigo();
+        validaNome();
+        validaDescricao();
+        validaPreco();
+        validaCategoria();
+        validaImagem();
+        validaTempoPreparo();
+    }
+
+    private void validaCodigo() throws EntradaInvalidaException {
+        if(codigo == null || codigo.isEmpty()) {
+            throw new EntradaInvalidaException(CODIGO_NULO);
+        }
+    }
+
+    private void validaNome() throws EntradaInvalidaException {
+        if(nome == null || nome.isEmpty()) {
+            throw new EntradaInvalidaException(NOME_NULO);
+        }
+    }
+
+    private void validaDescricao() throws EntradaInvalidaException {
+        if(descricao == null || descricao.isEmpty()) {
+            throw new EntradaInvalidaException(DESCRICAO_NULA);
+        }
+    }
+
+    private void validaPreco() throws EntradaInvalidaException {
+        if(preco == null) {
+            throw new EntradaInvalidaException(PRECO_NULO);
+        }
+        if(preco <= 0) {
+            throw new EntradaInvalidaException(PRECO_MENOR_QUE_ZERO);
+        }
+    }
+
+    private void validaCategoria() throws EntradaInvalidaException {
+        if(categoria == null) {
+            throw new EntradaInvalidaException(CATEGORIA_NULA);
+        }
+    }
+
+    private void validaImagem() throws EntradaInvalidaException {
+        if(imagem != null) {
+            try {
+                new URL(imagem);
+            } catch (MalformedURLException e){
+                throw new EntradaInvalidaException(IMAGEM_NAO_E_UMA_URL);
+            }
+        }
+    }
+
+    private void validaTempoPreparo() throws EntradaInvalidaException {
+        if(tempoPreparoMin == null) {
+            throw new EntradaInvalidaException(TEMPO_DE_PREPARO_NULO);
+        }
+        if (tempoPreparoMin < 0) {
+            throw new EntradaInvalidaException(TEMPO_DE_PREPARO_MENOR_QUE_ZERO);
+        }
     }
 
     public String getCodigo() {
@@ -69,25 +146,4 @@ public class Produto {
     public Integer getTempoPreparoMin() {
         return tempoPreparoMin;
     }
-
-    private void validarProdutoComCodigo() throws EntradaInvalidaException {
-        if ((codigo == null) || (nome == null) || (descricao == null) || (preco == null) || (tempoPreparoMin == null)
-                || (tempoPreparoMin <= 0)) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
-        }
-        if (categoria.equals(null)) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
-        }
-    }
-
-    private void validarProdutoSemCodigo() throws EntradaInvalidaException {
-        if ((nome == null) || (descricao == null) || (preco == null) || (tempoPreparoMin == null)
-                || (tempoPreparoMin <= 0)) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
-        }
-        if (categoria.equals(null)) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
-        }
-    }
-
 }

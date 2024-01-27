@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
 
+    public static final String PRODUTO_NULO = "Entrada inválida! Produto não deve ser nulo!";
+    public static final String PRODUTO_JA_CADASTRADO = "O produto não pode ter o mesmo nome de um já cadastrado!";
+
     private final IProdutoRepositoryAdapterGateway produtoAdapterGateway;
 
     public GestaoProdutoUseCase(IProdutoRepositoryAdapterGateway produtoAdapterGateway) {
@@ -23,15 +26,13 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
 
     @Override
     public List<Produto> buscaTodos() {
-        List<Produto> produtos = produtoAdapterGateway.buscaTodos();
-        return produtos;
+        return produtoAdapterGateway.buscaTodos();
     }
 
     @Override
     public Produto buscaProduto(String codigo) throws ProdutoNaoEncontradoException {
         Optional<Produto> produto = produtoAdapterGateway.buscaProduto(codigo);
-        produto.orElseThrow(() -> new ProdutoNaoEncontradoException());
-        return produto.get();
+        return produto.orElseThrow(ProdutoNaoEncontradoException::new);
     }
 
     @Override
@@ -47,7 +48,11 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     @Override
     public Produto criaProduto(Produto produto) throws EntradaInvalidaException {
         if (produto == null) {
-            throw new EntradaInvalidaException("Entrada inválida! Produto não deve ser nulo!");
+            throw new EntradaInvalidaException(PRODUTO_NULO);
+        }
+        Optional<Produto> produtoExistente = produtoAdapterGateway.buscaProdutoPorNome(produto.getNome());
+        if(produtoExistente.isPresent()){
+            throw new EntradaInvalidaException(PRODUTO_JA_CADASTRADO);
         }
         Produto newProduto = new Produto(UUID.randomUUID().toString(), produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin());
@@ -57,7 +62,9 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     @Override
     public Void removeProduto(String codigo) throws ProdutoNaoEncontradoException {
         Optional<Produto> produtoRecuperado = produtoAdapterGateway.buscaProduto(codigo);
-        produtoRecuperado.orElseThrow(() -> new ProdutoNaoEncontradoException());
+        if(!produtoRecuperado.isPresent()){
+            throw new ProdutoNaoEncontradoException();
+        }
         produtoAdapterGateway.removeProduto(codigo);
         return null;
     }
@@ -66,7 +73,9 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     public void atualizaProduto(String codigo, Produto produto)
             throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         Optional<Produto> produtoRecuperado = produtoAdapterGateway.buscaProduto(codigo);
-        produtoRecuperado.orElseThrow(() -> new ProdutoNaoEncontradoException());
+        if(!produtoRecuperado.isPresent()){
+            throw new ProdutoNaoEncontradoException();
+        }
         produtoAdapterGateway.atualizaProduto(new Produto(codigo, produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin()));
     }

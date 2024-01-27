@@ -24,7 +24,7 @@ import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
 
 @ExtendWith(MockitoExtension.class)
-public class ProdutoServiceTest {
+class ProdutoServiceTest {
 
     @InjectMocks
     private GestaoProdutoUseCase gestao;
@@ -33,13 +33,13 @@ public class ProdutoServiceTest {
     private IProdutoRepositoryAdapterGateway produtoRepositoryAdapterGateway;
 
     @Test
-    public void criaProdutoComProdutoValido() throws EntradaInvalidaException {
+    void criaProdutoComProdutoValido() throws EntradaInvalidaException {
 
         gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
 
         // Preparação de dados de teste
         Produto produto = new Produto("123", "Produto de Teste", "Descrição de Teste", 10.0, CategoriaProduto.LANCHE,
-                "Imagem de Teste", 30);
+                "http://teste.com/imagem.png", 30);
 
         // Configuração de comportamento simulado para o produtoAdapterGateway
 
@@ -55,7 +55,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void criaProdutoComProdutoNulo() {
+    void criaProdutoComProdutoNulo() {
 
         gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
         // Preparação de dados de teste
@@ -68,7 +68,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void atualizaProdutoComProdutoExistente()
+    void atualizaProdutoComProdutoExistente()
             throws ProdutoNaoEncontradoException, EntradaInvalidaException {
 
         // gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
@@ -76,7 +76,7 @@ public class ProdutoServiceTest {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produto = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0, CategoriaProduto.LANCHE,
-                "Imagem de Teste", 30);
+                "http://teste.com/imagem.png", 30);
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProduto(produto.getCodigo()))
@@ -91,14 +91,14 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void atualizaProdutoComProdutoNaoExistente() throws EntradaInvalidaException {
+    void atualizaProdutoComProdutoNaoExistente() throws EntradaInvalidaException {
 
         // gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
 
         // Preparação de dados de teste
         String codigoProdutoNaoExistente = "97654";
         Produto produto = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0, CategoriaProduto.LANCHE,
-                "Imagem de Teste", 30);
+                "http://teste.com/imagem.png", 30);
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProduto(codigoProdutoNaoExistente))
@@ -114,12 +114,12 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void removeProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
+    void removeProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoExistente = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,
                 CategoriaProduto.LANCHE,
-                "Imagem de Teste", 30);
+                "http://teste.com/imagem.png", 30);
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProduto(produtoExistente.getCodigo()))
@@ -133,7 +133,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void removeProdutoComProdutoNaoExistente() {
+    void removeProdutoComProdutoNaoExistente() {
         // Preparação de dados de teste
         String codigoProdutoNaoExistente = "98765";
 
@@ -151,12 +151,12 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
+    void buscaProdutoComProdutoExistente() throws ProdutoNaoEncontradoException, EntradaInvalidaException {
         // Preparação de dados de teste
         String codigoProduto = "12345";
         Produto produtoExistente = new Produto("12345", "Produto de Teste", "Descrição de Teste", 10.0,
                 CategoriaProduto.LANCHE,
-                "Imagem de Teste", 30);
+                "http://teste.com/imagem.png", 30);
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProduto(produtoExistente.getCodigo()))
@@ -171,7 +171,7 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutoComProdutoNaoExistente() {
+    void buscaProdutoComProdutoNaoExistente() {
         // Preparação de dados de teste
         String codigoProdutoNaoExistente = "98765";
 
@@ -186,12 +186,12 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaProdutosPorCategoria() throws EntradaInvalidaException {
+    void buscaProdutosPorCategoria() throws EntradaInvalidaException {
         // Preparação de dados de teste
         CategoriaProduto categoria = CategoriaProduto.LANCHE;
         List<Produto> produtosSimulados = Arrays.asList(
-                new Produto("1", "Produto 1", "Descrição 1", 10.0, CategoriaProduto.LANCHE, "Imagem 1", 20),
-                new Produto("2", "Produto 2", "Descrição 2", 15.0, CategoriaProduto.LANCHE, "Imagem 2", 25));
+                new Produto("1", "Produto 1", "Descrição 1", 10.0, CategoriaProduto.LANCHE, "http://teste.com/imagem1.png", 20),
+                new Produto("2", "Produto 2", "Descrição 2", 15.0, CategoriaProduto.LANCHE, "http://teste.com/imagem3.png", 25));
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProdutosPorCategoria(categoria))
@@ -206,12 +206,12 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    public void buscaTodosProdutos() throws EntradaInvalidaException {
+    void buscaTodosProdutos() throws EntradaInvalidaException {
         // Preparação de dados de teste
         CategoriaProduto categoria = CategoriaProduto.LANCHE;
         List<Produto> produtosSimulados = Arrays.asList(
-                new Produto("1", "Produto 1", "Descrição 1", 10.0, CategoriaProduto.LANCHE, "Imagem 1", 20),
-                new Produto("2", "Produto 2", "Descrição 2", 15.0, CategoriaProduto.BEBIDA, "Imagem 2", 25));
+                new Produto("1", "Produto 1", "Descrição 1", 10.0, CategoriaProduto.LANCHE, "http://teste.com/imagem.png", 20),
+                new Produto("2", "Produto 2", "Descrição 2", 15.0, CategoriaProduto.BEBIDA, "http://teste.com/imagem2.png", 25));
 
         // Configuração do comportamento simulado do produtoAdapterGateway
         Mockito.when(produtoRepositoryAdapterGateway.buscaProdutosPorCategoria(categoria))

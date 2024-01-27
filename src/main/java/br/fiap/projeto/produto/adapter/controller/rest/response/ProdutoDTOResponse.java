@@ -1,7 +1,9 @@
 package br.fiap.projeto.produto.adapter.controller.rest.response;
 
 import br.fiap.projeto.produto.entity.Produto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 @Builder
 @Data
