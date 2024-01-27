@@ -1,7 +1,7 @@
 package br.fiap.projeto.produto.entity;
 
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
+import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -8,7 +8,6 @@ import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
