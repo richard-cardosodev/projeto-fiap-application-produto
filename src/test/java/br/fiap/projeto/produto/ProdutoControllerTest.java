@@ -1,25 +1,19 @@
 package br.fiap.projeto.produto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import br.fiap.projeto.produto.adapter.controller.ProdutoRestAdapterController;
-import br.fiap.projeto.produto.entity.Produto;
-import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
 import br.fiap.projeto.produto.adapter.controller.rest.request.ProdutoDTORequest;
 import br.fiap.projeto.produto.adapter.controller.rest.response.ProdutoDTOResponse;
+import br.fiap.projeto.produto.entity.Produto;
+import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IGestaoProdutoUseCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ProdutoControllerTest {
 
@@ -35,16 +29,13 @@ class ProdutoControllerTest {
     }
 
     @Test
-    void criaProduto() throws EntradaInvalidaException {
+    void criaProduto() throws EntradaInvalidaException, ProdutoDuplicadoException {
 
         controller = new ProdutoRestAdapterController(gestaoProdutoUseCase);
 
         // Preparação de dados de teste
         ProdutoDTORequest produtoDTORequest = new ProdutoDTORequest("Produto de Teste", "Descrição de Teste", 10.0,
                 "LANCHE", "http://teste.com/imagem.png", 30);
-        // Produto produtoSimulado = new Produto("Produto de Teste", "Descrição de
-        // Teste", 10.0, CategoriaProduto.LANCHE,
-        // "http://teste.com/imagem.png", 30);
         Produto produtoSimulado = produtoDTORequest.toProduto();
 
         // Configuração do comportamento simulado do produtoUseCase
@@ -54,8 +45,6 @@ class ProdutoControllerTest {
         ProdutoDTOResponse resultado = controller.criaProduto(produtoDTORequest);
 
         // Verificação dos resultados
-        // Mockito.verify(gestaoProdutoUseCase).criaProduto(produtoDTORequest.toProduto());
-
         assertEquals(produtoSimulado.getNome(), resultado.getNome());
         assertEquals(produtoSimulado.getDescricao(), resultado.getDescricao());
         assertEquals(produtoSimulado.getPreco(), resultado.getPreco());

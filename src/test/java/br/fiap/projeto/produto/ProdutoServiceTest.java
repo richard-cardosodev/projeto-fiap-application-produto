@@ -1,15 +1,12 @@
 package br.fiap.projeto.produto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
+import br.fiap.projeto.produto.usecase.GestaoProdutoUseCase;
+import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
+import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,10 +15,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.opentest4j.AssertionFailedError;
 
-import br.fiap.projeto.produto.usecase.GestaoProdutoUseCase;
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
-import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
-import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProdutoServiceTest {
@@ -33,7 +31,7 @@ class ProdutoServiceTest {
     private IProdutoRepositoryAdapterGateway produtoRepositoryAdapterGateway;
 
     @Test
-    void criaProdutoComProdutoValido() throws EntradaInvalidaException {
+    void criaProdutoComProdutoValido() throws EntradaInvalidaException, ProdutoDuplicadoException {
 
         gestao = new GestaoProdutoUseCase(produtoRepositoryAdapterGateway);
 

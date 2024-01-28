@@ -6,6 +6,7 @@ import br.fiap.projeto.produto.adapter.controller.rest.response.ProdutoDTORespon
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IGestaoProdutoUseCase;
 
@@ -44,7 +45,7 @@ public class ProdutoRestAdapterController implements IProdutoRestAdapterControll
     }
 
     @Override
-    public ProdutoDTOResponse criaProduto(ProdutoDTORequest produtoDTORequest) throws EntradaInvalidaException {
+    public ProdutoDTOResponse criaProduto(ProdutoDTORequest produtoDTORequest) throws EntradaInvalidaException, ProdutoDuplicadoException {
         Produto produto = this.produtoUseCase.criaProduto(produtoDTORequest.toProduto());
         return ProdutoDTOResponse.newInstanceByProduto(produto);
     }
