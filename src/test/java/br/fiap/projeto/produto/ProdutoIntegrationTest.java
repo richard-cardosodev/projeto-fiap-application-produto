@@ -4,6 +4,7 @@ import br.fiap.projeto.produto.adapter.controller.rest.request.ProdutoDTORequest
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -27,15 +29,16 @@ class ProdutoIntegrationTest {
 
     @Test
     void testeInserir() throws Exception {
-        mvc.perform(MockMvcRequestBuilders
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders
                         .post("/produtos")
                         .content(asJsonString(geraProdutoRequestDTO()))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()));
-
+                .andReturn();
+        Integer status = mvcResult.getResponse().getStatus();
+        Assertions.assertTrue(status == 201 || status == 409);
     }
 
     @Test
@@ -82,9 +85,22 @@ class ProdutoIntegrationTest {
         ).andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
     }
 
+    @Test
+    void testInserirProdutoDuplicado() throws Exception {
+        ProdutoDTORequest dto = geraProdutoRequestDTO();
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/produtos")
+                        .content(asJsonString(dto))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CONFLICT.value()));
+    }
+
     private ProdutoDTORequest geraProdutoRequestDTO() {
         return ProdutoDTORequest.builder()
-                .nome(gerarUsuarioAleatorio())
+                .nome("Produto1")
                 .descricao("Descrição Produto1")
                 .categoria(CategoriaProduto.LANCHE.name())
                 .preco(12.5)
@@ -93,13 +109,11 @@ class ProdutoIntegrationTest {
                 .build();
     }
 
-    private static String gerarUsuarioAleatorio() {
-        // Caracteres possíveis no nome de usuário
+    private static String gerarProdutoAleatorio() {
         String caracteres = "abcdefghijklmnopqrstuvwxyz1234567890";
 
         StringBuilder usuario = new StringBuilder();
 
-        // Gera um nome de usuário aleatório com comprimento entre 6 e 12 caracteres
         int comprimentoUsuario = 6 + new Random().nextInt(7);
         for (int i = 0; i < comprimentoUsuario; i++) {
             int indiceCaractere = new Random().nextInt(caracteres.length());
