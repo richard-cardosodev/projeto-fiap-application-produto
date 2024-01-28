@@ -3,6 +3,7 @@ package br.fiap.projeto.produto.usecase.port;
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface IGestaoProdutoUseCase {
 
     List<String> getCategoriasDeProdutos();
 
-    Produto criaProduto(Produto produto) throws EntradaInvalidaException;
+    Produto criaProduto(Produto produto) throws EntradaInvalidaException, ProdutoDuplicadoException;
 
     Void removeProduto(String codigo) throws ProdutoNaoEncontradoException;
 

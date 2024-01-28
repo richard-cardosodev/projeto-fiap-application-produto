@@ -3,6 +3,7 @@ package br.fiap.projeto.produto.usecase;
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import br.fiap.projeto.produto.usecase.port.IGestaoProdutoUseCase;
 import br.fiap.projeto.produto.usecase.port.IProdutoRepositoryAdapterGateway;
@@ -46,13 +47,13 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
     }
 
     @Override
-    public Produto criaProduto(Produto produto) throws EntradaInvalidaException {
+    public Produto criaProduto(Produto produto) throws EntradaInvalidaException, ProdutoDuplicadoException {
         if (produto == null) {
             throw new EntradaInvalidaException(PRODUTO_NULO);
         }
         Optional<Produto> produtoExistente = produtoAdapterGateway.buscaProdutoPorNome(produto.getNome());
         if(produtoExistente.isPresent()){
-            throw new EntradaInvalidaException(PRODUTO_JA_CADASTRADO);
+            throw new ProdutoDuplicadoException(PRODUTO_JA_CADASTRADO);
         }
         Produto newProduto = new Produto(UUID.randomUUID().toString(), produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin());

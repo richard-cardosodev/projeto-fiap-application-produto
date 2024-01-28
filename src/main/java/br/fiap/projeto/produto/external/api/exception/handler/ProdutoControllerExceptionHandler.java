@@ -3,8 +3,8 @@ package br.fiap.projeto.produto.external.api.exception.handler;
 import br.fiap.projeto.produto.external.api.ProdutoApiController;
 import br.fiap.projeto.produto.external.api.exception.ProdutoResponseError;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,10 +24,10 @@ public class ProdutoControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(response);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler(ProdutoDuplicadoException.class)
     public ResponseEntity<ProdutoResponseError> handleDataIntegrityViolationException(Exception e) {
         ProdutoResponseError response = new ProdutoResponseError(3002, e.getMessage(), e.getCause());
-        return ResponseEntity.unprocessableEntity().body(response);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
     @ExceptionHandler(Exception.class)

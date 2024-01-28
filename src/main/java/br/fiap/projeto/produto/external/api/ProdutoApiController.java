@@ -5,6 +5,7 @@ import br.fiap.projeto.produto.adapter.controller.rest.request.ProdutoDTORequest
 import br.fiap.projeto.produto.adapter.controller.rest.response.ProdutoDTOResponse;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import br.fiap.projeto.produto.usecase.exception.ProdutoDuplicadoException;
 import br.fiap.projeto.produto.usecase.exception.ProdutoNaoEncontradoException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,7 +57,7 @@ public class ProdutoApiController {
 
     @PostMapping
     @ApiOperation(value = "Cria produto", notes = "Este endpoint permite a criação de novos produtos")
-    public ResponseEntity<ProdutoDTOResponse> criaProduto(@RequestBody ProdutoDTORequest produtoDTORequest) throws EntradaInvalidaException {
+    public ResponseEntity<ProdutoDTOResponse> criaProduto(@RequestBody ProdutoDTORequest produtoDTORequest) throws EntradaInvalidaException, ProdutoDuplicadoException {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.produtoAdapterController.criaProduto(produtoDTORequest));
     }
 

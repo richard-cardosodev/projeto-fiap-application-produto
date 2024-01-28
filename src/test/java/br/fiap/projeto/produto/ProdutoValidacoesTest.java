@@ -1,13 +1,12 @@
 package br.fiap.projeto.produto;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.entity.enums.CategoriaProduto;
+import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
 import org.junit.jupiter.api.Test;
 
-import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProdutoValidacoesTest {
 
