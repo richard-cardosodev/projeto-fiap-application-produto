@@ -53,7 +53,7 @@ public class GestaoProdutoUseCase implements IGestaoProdutoUseCase {
         }
         Optional<Produto> produtoExistente = produtoAdapterGateway.buscaProdutoPorNome(produto.getNome());
         if(produtoExistente.isPresent()){
-            throw new ProdutoDuplicadoException(PRODUTO_JA_CADASTRADO);
+            throw new ProdutoDuplicadoException(PRODUTO_JA_CADASTRADO, produtoExistente.get());
         }
         Produto newProduto = new Produto(UUID.randomUUID().toString(), produto.getNome(), produto.getDescricao(),
                 produto.getPreco(), produto.getCategoria(), produto.getImagem(), produto.getTempoPreparoMin());

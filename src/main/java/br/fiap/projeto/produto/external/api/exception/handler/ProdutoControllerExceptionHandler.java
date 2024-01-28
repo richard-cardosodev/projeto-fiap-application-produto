@@ -1,5 +1,6 @@
 package br.fiap.projeto.produto.external.api.exception.handler;
 
+import br.fiap.projeto.produto.entity.Produto;
 import br.fiap.projeto.produto.external.api.ProdutoApiController;
 import br.fiap.projeto.produto.external.api.exception.ProdutoResponseError;
 import br.fiap.projeto.produto.usecase.exception.EntradaInvalidaException;
@@ -25,9 +26,9 @@ public class ProdutoControllerExceptionHandler {
     }
 
     @ExceptionHandler(ProdutoDuplicadoException.class)
-    public ResponseEntity<ProdutoResponseError> handleDataIntegrityViolationException(Exception e) {
+    public ResponseEntity<Produto> handleProdutoDuplicadoException(ProdutoDuplicadoException e) {
         ProdutoResponseError response = new ProdutoResponseError(3002, e.getMessage(), e.getCause());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getProdutoExistente());
     }
 
     @ExceptionHandler(Exception.class)
