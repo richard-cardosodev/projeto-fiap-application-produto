@@ -212,6 +212,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>br/fiap/projeto/produto/adapter/gateway/ProdutoRepositoryAdapterGatewayPostgre*</exclude>
+                        <exclude>br/fiap/projeto/produto/external/repository/jpa/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
