@@ -87,10 +87,10 @@ class ProdutoIntegrationTest {
 
     @Test
     void testInserirProdutoDuplicado() throws Exception {
-        ProdutoDTORequest dto = geraProdutoRequestDTO();
+        testeInserir();
         mvc.perform(MockMvcRequestBuilders
                         .post("/produtos")
-                        .content(asJsonString(dto))
+                        .content(asJsonString(geraProdutoRequestDTO()))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
